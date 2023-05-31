@@ -47,8 +47,8 @@ public class Main {
         }
         System.out.println(model);
         switch (model.getCurrentPlayer()){
-            case PLAYER_1 -> System.out.println("Játékos_1 vesztett.");
-            case PLAYER_2 -> System.out.println("Játékos_2 vesztett.");
+            case PLAYER_1 -> System.out.println("Játékos_2 vesztett.");
+            case PLAYER_2 -> System.out.println("Játékos_1 vesztett.");
         }
     }
 }
