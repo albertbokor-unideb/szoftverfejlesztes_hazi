@@ -1,9 +1,6 @@
 package model;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 
 public class BoardGameModel {
@@ -34,13 +31,19 @@ public class BoardGameModel {
         return sb.toString();
     }
 
-    public void takeFromBoard(position args[]){
-        if(canSelect(args)){
-            for(position cell : args){
-                this.board[cell.col()][cell.row()]=false; //checks if cell already empty
+    public boolean isGameover(){
+        for (int i = 0; i < BOARD_SIZE; i++) {
+            for (int j = 0; j < BOARD_SIZE; j++) {
+                if (board[i][j]) {
+                    return false;
+                }
             }
-            changePlayer();
         }
+        return true;
+    }
+
+    public Player getCurrentPlayer() {
+        return CurrentPlayer;
     }
 
     private void changePlayer(){
@@ -50,8 +53,20 @@ public class BoardGameModel {
         }
     }
 
-    public boolean canSelect(position args[]){
-        if (args.length>BOARD_SIZE || args.length<1) {return false;}
+    public void takeFromBoard(ArrayList<position> args){
+        //if(canSelect(args)){      //kikommentelve ne duplázza az ellenőrzést
+            for(position cell : args){
+                this.board[cell.row()][cell.col()]=false;
+            }
+            changePlayer();
+        //}
+    }
+    public boolean canSelect(ArrayList<position> args){
+        if (args.size()>BOARD_SIZE || args.size()<1) {return false;}
+        for(position cell : args){
+            if (cell.col()>=BOARD_SIZE || cell.col()<0) {return false;}
+            if (cell.row()>=BOARD_SIZE || cell.row()<0) {return false;}
+        }
         for(position cell : args){
             if(!this.board[cell.col()][cell.row()]){return false;}   //checks if cell already empty
         }
@@ -60,10 +75,10 @@ public class BoardGameModel {
     }
 
 
-    public static boolean areAdjacent(position args[]){
+    public static boolean areAdjacent(ArrayList<position> args){
         //TODO: sanity refactor
-        if(args.length ==1){return true;}
-        if(args.length >1){
+        if(args.size() ==1){return true;}
+        if(args.size() >1){
             if(sameRow(args)){  //horizontal
                 ArrayList<Integer> posList= new ArrayList<Integer>();
                 for(position cell : args){
@@ -72,12 +87,11 @@ public class BoardGameModel {
                 Collections.sort(posList);    //sorts ascending
                 if(
                     posList.get(posList.size() - 1) - posList.get(0)
-                            != posList.size()-1
+                            == posList.size()-1
                 ){
-                    return false;   //if distance between first and last isn't len-1 then it's not adjacent
+                    return true;   //if distance between first and last is len-1 then it's adjacent
                 }
-            }
-            if(sameCol(args)){  //vertical
+            } else if(sameCol(args)){  //vertical
                 ArrayList<Integer> posList= new ArrayList<Integer>();
                 for(position cell : args){
                     posList.add(Integer.valueOf(cell.row()));
@@ -85,31 +99,31 @@ public class BoardGameModel {
                 Collections.sort(posList);    //sorts ascending
                 if(
                         posList.get(posList.size() - 1) - posList.get(0)
-                                != posList.size()-1
+                                == posList.size()-1
                 ){
-                    return false;   //if distance between first and last isn't len-1 then it's not adjacent
+                    return true;   //if distance between first and last isn't len-1 then it's not adjacent
                 }
             }
         }
         return false;
     }
 
-    public static boolean sameRow(position args[]){
-        if(args.length ==1){return true;}
-        if(args.length >1){
-            for (int i=1; i<args.length; i++){
-                if(args[i].row() != args[0].row()){
+    public static boolean sameRow(ArrayList<position> args){
+        if(args.size() ==1){return true;}
+        if(args.size() >1){
+            for (int i=1; i<args.size(); i++){
+                if(args.get(i).row() != args.get(0).row()){
                     return false;}
             }
             return true;
         }
         return false;
     }
-    public static boolean sameCol(position args[]){
-        if(args.length ==1){return true;}
-        if(args.length >1){
-            for (int i=1; i<args.length; i++){
-                if(args[i].col() != args[0].col()){
+    public static boolean sameCol(ArrayList<position> args){
+        if(args.size() ==1){return true;}
+        if(args.size() >1){
+            for (int i=1; i<args.size(); i++){
+                if(args.get(i).col() != args.get(0).col()){
                     return false;}
             }
             return true;
