@@ -68,7 +68,7 @@ public class BoardGameModel {
             if (cell.row()>=BOARD_SIZE || cell.row()<0) {return false;}
         }
         for(position cell : args){
-            if(!this.board[cell.col()][cell.row()]){return false;}   //checks if cell already empty
+            if(!this.board[cell.row()][cell.col()]){return false;}   //checks if cell already empty
         }
         if(!areAdjacent(args)){ return false;}
         return true;
