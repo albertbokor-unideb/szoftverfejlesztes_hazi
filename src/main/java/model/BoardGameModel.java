@@ -9,13 +9,14 @@ import java.util.Collections;
 public class BoardGameModel {
     public static final int BOARD_SIZE = 4;
     private boolean [] [] board = new boolean[BOARD_SIZE][BOARD_SIZE];
-
-    public BoardGameModel(boolean[][] board) {
+    private Player CurrentPlayer;
+    public BoardGameModel() {
         for (int i = 0; i < BOARD_SIZE; i++) {
             for (int j = 0; j < BOARD_SIZE; j++) {
                 board[i][j] = true;
             }
         }
+        CurrentPlayer=Player.PLAYER_1;
     }
 
     public String toString() {
@@ -38,6 +39,14 @@ public class BoardGameModel {
             for(position cell : args){
                 this.board[cell.col()][cell.row()]=false; //checks if cell already empty
             }
+            changePlayer();
+        }
+    }
+
+    private void changePlayer(){
+        switch (CurrentPlayer){
+            case PLAYER_1 -> CurrentPlayer=Player.PLAYER_2;
+            case PLAYER_2 -> CurrentPlayer=Player.PLAYER_1;
         }
     }
 
@@ -106,6 +115,11 @@ public class BoardGameModel {
             return true;
         }
         return false;
+    }
+
+    public static void main(String[] args) {
+        var model = new BoardGameModel();
+        System.out.println(model);
     }
 
 }
