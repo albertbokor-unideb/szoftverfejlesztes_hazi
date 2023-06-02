@@ -27,8 +27,10 @@
       </GridPane>
       <Button layoutX="69.0" layoutY="613.0" mnemonicParsing="false" onAction="#takeFromBoard" text="Elvesz" />
       <Button layoutX="407.0" layoutY="613.0" mnemonicParsing="false" onAction="#quitGame" text="Kilépés" />
-      <Label layoutX="181.0" layoutY="596.0" text="Soron:" />
-      <Label layoutX="240.0" layoutY="596.0" text="_" />
+      <Label fx:id="turnDisplay" layoutX="189.0" layoutY="588.0" text="..." textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font></Label>
       <Text layoutX="60.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Egy 4 × 4 mezőből  álló tábla mezőire 16 darab kavicsot helyezünk, minden mezőre egyet-egyet. A két játékos felváltva vehet le a tábláról kavicsokat, legalább 1 és legfeljebb 4 darabot. Csak olyan kavicsokat lehet levenni, amelyek egy sorban vagy egy oszlopban vannak,  és nincs közöttük üres mező. Az veszít, aki utoljára lép." wrappingWidth="400.0">
          <font>
             <Font size="14.0" />

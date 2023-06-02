@@ -8,6 +8,7 @@ import javafx.application.Platform;
 import javafx.beans.binding.ObjectBinding;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
@@ -26,6 +27,9 @@ public class BoardGameController {
     private ArrayList<Position> selectedGridPositions;
 
     @FXML
+    private Label turnDisplay;
+
+    @FXML
     private void initialize() {
         for (var i = 0; i < board.getRowCount(); i++) {
             for (var j = 0; j < board.getColumnCount(); j++) {
@@ -34,6 +38,14 @@ public class BoardGameController {
             }
         }
         selectedGridPositions = new ArrayList<>();
+        updateCurrentPlayer();
+    }
+
+    private void updateCurrentPlayer(){
+        switch (model.getCurrentPlayer()){
+            case PLAYER_1 -> turnDisplay.setText("Játékos_1 választ!");
+            case PLAYER_2 -> turnDisplay.setText("Játékos_2 választ!");
+        }
     }
 
     private StackPane createSquare(int i, int j) {
@@ -74,30 +86,31 @@ public class BoardGameController {
 
         System.out.printf("(%d,%d) selected\n", row, col); ////////////////////////////////////////////////////////////
         System.out.printf(selectedGridPositions.toString()+"\n");//////////////////////////////////////////////////////
-        //add clicked positions to a list
     }
 
     @FXML
     public void takeFromBoard(ActionEvent e){
 
-        System.out.printf("taking...\n"); ////////////////////////////////////////////////////////////
         if(model.canSelect(selectedGridPositions)){
+            for (Position position : selectedGridPositions){
+                var square = getSquare(position);
+                System.out.println(square.getStyleClass()+"\n");
+            }
             model.takeFromBoard(selectedGridPositions);
-            System.out.printf("taken!\n"); ////////////////////////////////////////////////////////////
-        }
-
-        for (Position position : selectedGridPositions){
-            var square = getSquare(position);
-            System.out.println(square.getStyleClass()+"\n");
         }
         clearSelection();
-        System.out.printf("selector reset!\n"); ////////////////////////////////////////////////////////////
+        if(model.isGameover()){
+            switch (model.getCurrentPlayer()){
+                case PLAYER_1 -> turnDisplay.setText("Játékos_2 vesztett!");
+                case PLAYER_2 -> turnDisplay.setText("Játékos_1 vesztett!");
+            }
+        }
+        updateCurrentPlayer();
     }
 
     private void clearSelection() {
         for (Position position : selectedGridPositions){
             var square = getSquare(position);
-            System.out.println(square.getStyleClass());//////////////////////////////////////////////////////
             square.getStyleClass().remove("selected");
         }
         selectedGridPositions.clear();
@@ -106,9 +119,6 @@ public class BoardGameController {
     private StackPane getSquare(Position position) {
         for (var child : board.getChildren()) {
             System.out.printf(child.toString()+"\n");////////////////////////////////////////////////
-        }
-        for (var child : board.getChildren()) {
-            System.out.printf("got square!\n");///////////////////////////////////////////////////
             if (GridPane.getRowIndex(child) == position.row() && GridPane.getColumnIndex(child) == position.col()) {
                 return (StackPane) child;
             }
