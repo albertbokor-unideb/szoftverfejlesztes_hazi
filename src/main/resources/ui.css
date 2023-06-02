@@ -5,3 +5,8 @@
 .square:hover {
     -fx-background-color: whitesmoke;
 }
+
+
+.selected {
+    -fx-background-color: black;
+}

@@ -1,16 +1,20 @@
 package boardgame.model;
 
+import javafx.beans.Observable;
+import javafx.beans.property.ReadOnlyObjectProperty;
+import javafx.beans.property.ReadOnlyObjectWrapper;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
 public class BoardGameModel {
     public static final int BOARD_SIZE = 4;
-    private boolean[][] board = new boolean[BOARD_SIZE][BOARD_SIZE];
+    private ReadOnlyObjectWrapper<Boolean>[][] board = new ReadOnlyObjectWrapper[BOARD_SIZE][BOARD_SIZE];
     private Player currentPlayer;
     public BoardGameModel() {
         for (int i = 0; i < BOARD_SIZE; i++) {
             for (int j = 0; j < BOARD_SIZE; j++) {
-                board[i][j] = true;
+                board[i][j] = new ReadOnlyObjectWrapper<Boolean>(Boolean.TRUE);
             }
         }
         currentPlayer = Player.PLAYER_1;
@@ -20,7 +24,7 @@ public class BoardGameModel {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < BOARD_SIZE; i++) {
             for (int j = 0; j < BOARD_SIZE; j++) {
-                if (board[i][j]) {
+                if (board[i][j].get()) {
                     sb.append('+');
                 } else {
                     sb.append('-');
@@ -31,10 +35,13 @@ public class BoardGameModel {
         return sb.toString();
     }
 
+    public ReadOnlyObjectProperty<Boolean> isCellFull(int i, int j) {
+        return board[i][j].getReadOnlyProperty();
+    }
     public boolean isGameover() {
         for (int i = 0; i < BOARD_SIZE; i++) {
             for (int j = 0; j < BOARD_SIZE; j++) {
-                if (board[i][j]) {
+                if (board[i][j].get()) {
                     return false;
                 }
             }
@@ -56,7 +63,7 @@ public class BoardGameModel {
     public void takeFromBoard(ArrayList < Position > args) {
         //if(canSelect(args)){      //kikommentelve ne duplázza az ellenőrzést
         for (Position cell: args) {
-            this.board[cell.row()][cell.col()] = false;
+            this.board[cell.row()][cell.col()] = new ReadOnlyObjectWrapper<Boolean>(Boolean.FALSE);
         }
         changePlayer();
         //}
@@ -74,7 +81,7 @@ public class BoardGameModel {
             }
         }
         for (Position cell: args) {
-            if (!this.board[cell.row()][cell.col()]) {
+            if (!this.board[cell.row()][cell.col()].get()) {
                 return false;
             } //checks if cell already empty
         }
