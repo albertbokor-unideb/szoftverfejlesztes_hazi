@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="674.0" prefWidth="519.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <GridPane gridLinesVisible="true" layoutX="50.0" layoutY="59.0" prefHeight="400.0" prefWidth="400.0">
+      <GridPane gridLinesVisible="true" layoutX="60.0" layoutY="162.0" prefHeight="400.0" prefWidth="400.0">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -23,8 +25,14 @@
           <RowConstraints maxHeight="100.0" minHeight="10.0" prefHeight="80.0" vgrow="SOMETIMES" />
         </rowConstraints>
       </GridPane>
-      <Button layoutX="56.0" layoutY="535.0" mnemonicParsing="false" text="Take" />
-      <Button layoutX="398.0" layoutY="535.0" mnemonicParsing="false" text="Quit" />
-      <Text layoutX="218.0" layoutY="498.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Turn:" />
+      <Button layoutX="65.0" layoutY="613.0" mnemonicParsing="false" text="Elvesz" />
+      <Button layoutX="407.0" layoutY="613.0" mnemonicParsing="false" text="Kilépés" />
+      <Label layoutX="181.0" layoutY="596.0" text="Soron:" />
+      <Label layoutX="240.0" layoutY="596.0" text="_" />
+      <Text layoutX="60.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Egy 4 × 4 mezőből  álló tábla mezőire 16 darab kavicsot helyezünk, minden mezőre egyet-egyet. A két játékos felváltva vehet le a tábláról kavicsokat, legalább 1 és legfeljebb 4 darabot. Csak olyan kavicsokat lehet levenni, amelyek egy sorban vagy egy oszlopban vannak,  és nincs közöttük üres mező. Az veszít, aki utoljára lép." wrappingWidth="400.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
    </children>
 </Pane>
