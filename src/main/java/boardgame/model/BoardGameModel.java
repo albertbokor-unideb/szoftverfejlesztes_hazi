@@ -1,4 +1,4 @@
-package model;
+package boardgame.model;
 
 import java.util.ArrayList;
 import java.util.Collections;

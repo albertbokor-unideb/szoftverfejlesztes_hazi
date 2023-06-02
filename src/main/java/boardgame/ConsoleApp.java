@@ -1,5 +1,7 @@
-import model.BoardGameModel;
-import model.Position;
+package boardgame;
+
+import boardgame.model.BoardGameModel;
+import boardgame.model.Position;
 
 import java.util.ArrayList;
 import java.util.Scanner;
