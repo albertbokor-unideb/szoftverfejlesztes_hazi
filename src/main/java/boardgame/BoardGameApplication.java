@@ -19,5 +19,4 @@ public class BoardGameApplication extends Application {
         stage.setResizable(false);
         stage.show();
     }
-
 }

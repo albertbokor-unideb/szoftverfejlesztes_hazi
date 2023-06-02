@@ -1,6 +1,6 @@
 package boardgame;
 
-import boardgame.model.BoardGameModel;
+import boardgame.model.BoardGameModelConsole;
 import boardgame.model.Position;
 
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ public class ConsoleApp {
                 a kiválasztott mezőket `x1 y1 x2 y2...` formában adja meg (x=oszlop, y=sor)!
                 kilépni `q`-val tud
                 """);
-        var model = new BoardGameModel();
+        var model = new BoardGameModelConsole();
 
         Scanner input = new Scanner(System.in);
         while(!model.isGameover()){
