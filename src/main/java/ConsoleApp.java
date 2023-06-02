@@ -1,5 +1,5 @@
 import model.BoardGameModel;
-import model.position;
+import model.Position;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -32,14 +32,14 @@ public class ConsoleApp {
                     System.exit(0);
                 }
                 Scanner lineScanner = new Scanner(line);
-                ArrayList<position> coordinateList = new ArrayList<>();
+                ArrayList<Position> coordinateList = new ArrayList<>();
                 int newRow;
                 int newCol;
                 while(lineScanner.hasNextInt()){
                     newRow=lineScanner.nextInt()-1;
                     if(lineScanner.hasNextInt()){
                         newCol=lineScanner.nextInt()-1;
-                        coordinateList.add(new position(newRow,newCol));
+                        coordinateList.add(new Position(newRow,newCol));
                     }else{
                         break;
                     }
