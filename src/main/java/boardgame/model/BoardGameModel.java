@@ -88,24 +88,24 @@ public class BoardGameModel {
 
 
     public static boolean areAdjacent(ArrayList < Position > args) {
-        //TODO: sanity refactor
         if (args.size() == 1) {
             return true;
         }
         if (args.size() > 1) {
+            boolean linear=false;
+            ArrayList < Integer > posList = new ArrayList <> ();
             if (sameRow(args)) { //horizontal
-                ArrayList < Integer > posList = new ArrayList <> ();
+                linear=true;
                 for (Position cell: args) {
                     posList.add(cell.col());
                 }
-                Collections.sort(posList); //sorts ascending
-                return posList.get(posList.size() - 1) - posList.get(0) ==
-                        posList.size() - 1; //if distance between first and last is len-1 then it's adjacent
             } else if (sameCol(args)) { //vertical
-                ArrayList < Integer > posList = new ArrayList <> ();
+                linear=true;
                 for (Position cell: args) {
                     posList.add(cell.row());
                 }
+            }
+            if(linear) {
                 Collections.sort(posList); //sorts ascending
                 return posList.get(posList.size() - 1) - posList.get(0) ==
                         posList.size() - 1; //if distance between first and last isn't len-1 then it's not adjacent
