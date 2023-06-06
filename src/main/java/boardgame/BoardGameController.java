@@ -23,9 +23,8 @@ public class BoardGameController {
     @FXML
     private GridPane board;
 
-    private BoardGameModel model = new BoardGameModel();
+    private final BoardGameModel model = new BoardGameModel();
     private ArrayList<Position> selectedGridPositions;
-
     @FXML
     private Label turnDisplay;
 
@@ -60,15 +59,15 @@ public class BoardGameController {
         square.getStyleClass().add("square");
         var piece = new Circle(40);
         piece.fillProperty().bind(
-                new ObjectBinding<Paint>() {
+                new ObjectBinding<>() {
                     {
                         super.bind(model.isCellFull(i, j));
                     }
                     @Override
                     protected Paint computeValue() {
                         if (model.isCellFull(i, j).get()) {
-                            return Color.DARKGREY;
-                        };
+                            return Color.DARKGRAY.darker();
+                        }
                         return Color.TRANSPARENT;
                     }
                 }
@@ -96,9 +95,6 @@ public class BoardGameController {
     public void takeFromBoard(ActionEvent e){
 
         if(model.canSelect(selectedGridPositions)){
-            for (Position position : selectedGridPositions){
-                var square = getSquare(position);
-            }
             model.takeFromBoard(selectedGridPositions);
         }
         clearSelection();

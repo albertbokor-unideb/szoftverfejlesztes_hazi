@@ -7,7 +7,7 @@ import java.util.Collections;
 
 public class BoardGameModel {
     public static final int BOARD_SIZE = 4;
-    private ReadOnlyBooleanWrapper[][] board = new ReadOnlyBooleanWrapper[BOARD_SIZE][BOARD_SIZE];
+    private final ReadOnlyBooleanWrapper[][] board = new ReadOnlyBooleanWrapper[BOARD_SIZE][BOARD_SIZE];
     private Player currentPlayer;
     public BoardGameModel() {
         for (int i = 0; i < BOARD_SIZE; i++) {
@@ -94,29 +94,21 @@ public class BoardGameModel {
         }
         if (args.size() > 1) {
             if (sameRow(args)) { //horizontal
-                ArrayList < Integer > posList = new ArrayList < Integer > ();
+                ArrayList < Integer > posList = new ArrayList <> ();
                 for (Position cell: args) {
-                    posList.add(Integer.valueOf(cell.col()));
+                    posList.add(cell.col());
                 }
                 Collections.sort(posList); //sorts ascending
-                if (
-                        posList.get(posList.size() - 1) - posList.get(0) ==
-                                posList.size() - 1
-                ) {
-                    return true; //if distance between first and last is len-1 then it's adjacent
-                }
+                return posList.get(posList.size() - 1) - posList.get(0) ==
+                        posList.size() - 1; //if distance between first and last is len-1 then it's adjacent
             } else if (sameCol(args)) { //vertical
-                ArrayList < Integer > posList = new ArrayList < Integer > ();
+                ArrayList < Integer > posList = new ArrayList <> ();
                 for (Position cell: args) {
-                    posList.add(Integer.valueOf(cell.row()));
+                    posList.add(cell.row());
                 }
                 Collections.sort(posList); //sorts ascending
-                if (
-                        posList.get(posList.size() - 1) - posList.get(0) ==
-                                posList.size() - 1
-                ) {
-                    return true; //if distance between first and last isn't len-1 then it's not adjacent
-                }
+                return posList.get(posList.size() - 1) - posList.get(0) ==
+                        posList.size() - 1; //if distance between first and last isn't len-1 then it's not adjacent
             }
         }
         return false;
