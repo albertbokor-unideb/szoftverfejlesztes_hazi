@@ -1,20 +1,18 @@
 package boardgame.model;
 
-import javafx.beans.Observable;
-import javafx.beans.property.ReadOnlyObjectProperty;
-import javafx.beans.property.ReadOnlyObjectWrapper;
-
+import javafx.beans.property.ReadOnlyBooleanProperty;
+import javafx.beans.property.ReadOnlyBooleanWrapper;
 import java.util.ArrayList;
 import java.util.Collections;
 
 public class BoardGameModel {
     public static final int BOARD_SIZE = 4;
-    private ReadOnlyObjectWrapper<Boolean>[][] board = new ReadOnlyObjectWrapper[BOARD_SIZE][BOARD_SIZE];
+    private ReadOnlyBooleanWrapper[][] board = new ReadOnlyBooleanWrapper[BOARD_SIZE][BOARD_SIZE];
     private Player currentPlayer;
     public BoardGameModel() {
         for (int i = 0; i < BOARD_SIZE; i++) {
             for (int j = 0; j < BOARD_SIZE; j++) {
-                board[i][j] = new ReadOnlyObjectWrapper<Boolean>(Boolean.TRUE);
+                board[i][j] = new ReadOnlyBooleanWrapper(Boolean.TRUE);
             }
         }
         currentPlayer = Player.PLAYER_1;
@@ -35,7 +33,7 @@ public class BoardGameModel {
         return sb.toString();
     }
 
-    public ReadOnlyObjectProperty<Boolean> isCellFull(int i, int j) {
+    public ReadOnlyBooleanProperty isCellFull(int i, int j) {
         return board[i][j].getReadOnlyProperty();
     }
     public boolean isGameover() {
@@ -60,10 +58,10 @@ public class BoardGameModel {
         }
     }
 
-    public void takeFromBoard(ArrayList < Position > args) {
+    public void takeFromBoard(ArrayList<Position> args) {
         //if(canSelect(args)){      //kikommentelve ne duplázza az ellenőrzést
         for (Position cell: args) {
-            this.board[cell.row()][cell.col()] = new ReadOnlyObjectWrapper<Boolean>(Boolean.FALSE);
+            board[cell.row()][cell.col()].setValue(false);
         }
         changePlayer();
         //}
@@ -85,10 +83,7 @@ public class BoardGameModel {
                 return false;
             } //checks if cell already empty
         }
-        if (!areAdjacent(args)) {
-            return false;
-        }
-        return true;
+        return areAdjacent(args);
     }
 
 

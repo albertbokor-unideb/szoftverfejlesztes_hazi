@@ -38,13 +38,20 @@ public class BoardGameController {
             }
         }
         selectedGridPositions = new ArrayList<>();
-        updateCurrentPlayer();
+        updateTurnDisplay();
     }
 
-    private void updateCurrentPlayer(){
-        switch (model.getCurrentPlayer()){
-            case PLAYER_1 -> turnDisplay.setText("Játékos_1 választ!");
-            case PLAYER_2 -> turnDisplay.setText("Játékos_2 választ!");
+    private void updateTurnDisplay(){
+        if(model.isGameover()){
+            switch (model.getCurrentPlayer()){
+                case PLAYER_1 -> turnDisplay.setText("Játékos_2 vesztett!");
+                case PLAYER_2 -> turnDisplay.setText("Játékos_1 vesztett!");
+            }
+        }else{
+            switch (model.getCurrentPlayer()){
+                case PLAYER_1 -> turnDisplay.setText("Játékos_1 választ!");
+                case PLAYER_2 -> turnDisplay.setText("Játékos_2 választ!");
+            }
         }
     }
 
@@ -83,9 +90,6 @@ public class BoardGameController {
         var col = GridPane.getColumnIndex(square);
         square.getStyleClass().add("selected");
         selectedGridPositions.add(new Position(row,col));
-
-        System.out.printf("(%d,%d) selected\n", row, col); ////////////////////////////////////////////////////////////
-        System.out.printf(selectedGridPositions.toString()+"\n");//////////////////////////////////////////////////////
     }
 
     @FXML
@@ -94,18 +98,11 @@ public class BoardGameController {
         if(model.canSelect(selectedGridPositions)){
             for (Position position : selectedGridPositions){
                 var square = getSquare(position);
-                System.out.println(square.getStyleClass()+"\n");
             }
             model.takeFromBoard(selectedGridPositions);
         }
         clearSelection();
-        if(model.isGameover()){
-            switch (model.getCurrentPlayer()){
-                case PLAYER_1 -> turnDisplay.setText("Játékos_2 vesztett!");
-                case PLAYER_2 -> turnDisplay.setText("Játékos_1 vesztett!");
-            }
-        }
-        updateCurrentPlayer();
+        updateTurnDisplay();
     }
 
     private void clearSelection() {
@@ -118,8 +115,12 @@ public class BoardGameController {
 
     private StackPane getSquare(Position position) {
         for (var child : board.getChildren()) {
-            System.out.printf(child.toString()+"\n");////////////////////////////////////////////////
-            if (GridPane.getRowIndex(child) == position.row() && GridPane.getColumnIndex(child) == position.col()) {
+            /*Null check was added because when grid isn't the full window,
+            * gridpane's child items also include a gridsquare containing all the other gridsquares,
+            * itself having no coordinates*/
+            if (GridPane.getRowIndex(child)!=null
+                    && GridPane.getRowIndex(child) == position.row()
+                    && GridPane.getColumnIndex(child) == position.col()) {
                 return (StackPane) child;
             }
         }
