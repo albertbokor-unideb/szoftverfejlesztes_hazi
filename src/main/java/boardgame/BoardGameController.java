@@ -15,6 +15,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
+import org.tinylog.Logger;
 
 import java.util.ArrayList;
 
@@ -34,27 +35,42 @@ public class BoardGameController {
             for (var j = 0; j < board.getColumnCount(); j++) {
                 var square = createSquare(i, j);
                 board.add(square, j, i);
+                Logger.debug("Square [{},{}] added to board",i,j);
             }
         }
         selectedGridPositions = new ArrayList<>();
         updateTurnDisplay();
+        Logger.debug("Board initialized, Player_1 turn");
     }
 
     private void updateTurnDisplay(){
         if(model.isGameover()){
+            Logger.debug("Game over");
             displayGameoOver();
         }else{
             switch (model.getCurrentPlayer()){
-                case PLAYER_1 -> turnDisplay.setText("Játékos_1 választ!");
-                case PLAYER_2 -> turnDisplay.setText("Játékos_2 választ!");
+                case PLAYER_1 -> {
+                    Logger.debug("Player_1 turn");
+                    turnDisplay.setText("Játékos_1 választ!");
+                }
+                case PLAYER_2 -> {
+                    Logger.debug("Player_2 turn");
+                    turnDisplay.setText("Játékos_2 választ!");
+                }
             }
         }
     }
 
     private void displayGameoOver(){
         switch (model.getCurrentPlayer()){
-            case PLAYER_1 -> turnDisplay.setText("Játékos_2 vesztett!");
-            case PLAYER_2 -> turnDisplay.setText("Játékos_1 vesztett!");
+            case PLAYER_1 -> {
+                Logger.debug("Player_2 lost");
+                turnDisplay.setText("Játékos_2 vesztett!");
+            }
+            case PLAYER_2 -> {
+                Logger.debug("Player_1 lost");
+                turnDisplay.setText("Játékos_1 vesztett!");
+            }
         }
         turnDisplay.getStyleClass().add("gameo-over-text");
         for (var child : board.getChildren()) {
@@ -90,6 +106,7 @@ public class BoardGameController {
 
     @FXML
     public void quitGame(ActionEvent e){
+        Logger.debug("Exiting");
         Platform.exit();
     }
 
@@ -100,6 +117,7 @@ public class BoardGameController {
         var col = GridPane.getColumnIndex(square);
         square.getStyleClass().add("selected");
         selectedGridPositions.add(new Position(row,col));
+        Logger.debug("Square[{},{}] selected",row,col);
     }
 
     @FXML
@@ -107,6 +125,9 @@ public class BoardGameController {
 
         if(model.canSelect(selectedGridPositions)){
             model.takeFromBoard(selectedGridPositions);
+            Logger.debug("Selection taken from board");
+        }else{
+            Logger.debug("Invalid selection");
         }
         clearSelection();
         updateTurnDisplay();
@@ -118,6 +139,7 @@ public class BoardGameController {
             square.getStyleClass().remove("selected");
         }
         selectedGridPositions.clear();
+        Logger.debug("Reset selection");
     }
 
     private StackPane getSquare(Position position) {
