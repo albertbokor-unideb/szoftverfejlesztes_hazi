@@ -42,16 +42,27 @@ public class BoardGameController {
 
     private void updateTurnDisplay(){
         if(model.isGameover()){
-            switch (model.getCurrentPlayer()){
-                case PLAYER_1 -> turnDisplay.setText("Játékos_2 vesztett!");
-                case PLAYER_2 -> turnDisplay.setText("Játékos_1 vesztett!");
-            }
+            displayGameoOver();
         }else{
             switch (model.getCurrentPlayer()){
                 case PLAYER_1 -> turnDisplay.setText("Játékos_1 választ!");
                 case PLAYER_2 -> turnDisplay.setText("Játékos_2 választ!");
             }
         }
+    }
+
+    private void displayGameoOver(){
+        switch (model.getCurrentPlayer()){
+            case PLAYER_1 -> turnDisplay.setText("Játékos_2 vesztett!");
+            case PLAYER_2 -> turnDisplay.setText("Játékos_1 vesztett!");
+        }
+        turnDisplay.getStyleClass().add("gameo-over-text");
+        for (var child : board.getChildren()) {
+            if (GridPane.getRowIndex(child)!=null) {
+                child.getStyleClass().add("gameo-over-grid");
+            }
+        }
+
     }
 
     private StackPane createSquare(int i, int j) {

@@ -6,7 +6,13 @@
     -fx-background-color: whitesmoke;
 }
 
-
 .selected {
     -fx-background-color: DARKGREY;
+}
+
+.gameo-over-text{
+    -fx-text-fill: DARKRED;
+}
+.gameo-over-grid{
+    -fx-background-color: BLACK;
 }
