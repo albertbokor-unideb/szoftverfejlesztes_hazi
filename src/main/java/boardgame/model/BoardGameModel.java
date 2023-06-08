@@ -59,12 +59,16 @@ public class BoardGameModel {
     }
 
     public void takeFromBoard(ArrayList<Position> args) {
-        //if(canSelect(args)){      //kikommentelve ne duplázza az ellenőrzést
-        for (Position cell: args) {
-            board[cell.row()][cell.col()].setValue(false);
+        if(canSelect(args)){
+            /*igen, ezt az ellenőrzést jelenlegi implementációban duplán végzi,
+            * megoldhatnám ugy is hogy ez metódus is visszatérit egy siker bool-t,
+            * de gondolom nem annyira jellemző ugy csinálni Javaban
+            */
+            for (Position cell: args) {
+                board[cell.row()][cell.col()].setValue(false);
+            }
+            changePlayer();
         }
-        changePlayer();
-        //}
     }
     public boolean canSelect(ArrayList < Position > args) {
         if (args.size() > BOARD_SIZE || args.size() < 1) {
@@ -94,12 +98,12 @@ public class BoardGameModel {
         if (args.size() > 1) {
             boolean linear=false;
             ArrayList < Integer > posList = new ArrayList <> ();
-            if (sameRow(args)) { //horizontal
+            if (areSameRow(args)) { //horizontal
                 linear=true;
                 for (Position cell: args) {
                     posList.add(cell.col());
                 }
-            } else if (sameCol(args)) { //vertical
+            } else if (areSameCol(args)) { //vertical
                 linear=true;
                 for (Position cell: args) {
                     posList.add(cell.row());
@@ -114,7 +118,7 @@ public class BoardGameModel {
         return false;
     }
 
-    public static boolean sameRow(ArrayList < Position > args) {
+    public static boolean areSameRow(ArrayList < Position > args) {
         if (args.size() == 1) {
             return true;
         }
@@ -128,7 +132,7 @@ public class BoardGameModel {
         }
         return false;
     }
-    public static boolean sameCol(ArrayList < Position > args) {
+    public static boolean areSameCol(ArrayList < Position > args) {
         if (args.size() == 1) {
             return true;
         }
