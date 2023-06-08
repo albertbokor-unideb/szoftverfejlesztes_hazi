@@ -9,9 +9,9 @@
     <description><!-- TODO: a short description of your project --></description>
     <developers>
         <developer>
-            <id><!-- TODO: your ID --></id>
-            <name><!-- TODO: your name --></name>
-            <email><!-- TODO: your email address --></email>
+            <id>JWS9IX</id>
+            <name>Bokor Albert</name>
+            <email>albertbokor@gmail.com</email>
             <organization>Faculty of Informatics, University of Debrecen</organization>
             <organizationUrl>https://www.inf.unideb.hu/</organizationUrl>
         </developer>
@@ -26,7 +26,8 @@
         <maven.checkstyle.version>3.2.1</maven.checkstyle.version>
         <maven.surefire.version>3.0.0</maven.surefire.version>
         <jacoco.version>0.8.9</jacoco.version>
-        <exec.mainClass><!-- TODO: the main class of your application that contains the main method --></exec.mainClass>
+        <tinylog.version>2.6.2</tinylog.version>
+        <exec.mainClass>boardgame.Main</exec.mainClass>
     </properties>
     <dependencies>
         <dependency>
