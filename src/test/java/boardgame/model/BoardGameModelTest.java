@@ -3,7 +3,6 @@ package boardgame.model;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -12,19 +11,19 @@ class BoardGameModelTest {
     @Test
     void isCellFull() {
         var board = new BoardGameModel();
-        assertEquals(true, board.isCellFull(0,0).get());
+        assertTrue(board.isCellFull(0, 0).get());
 
         ArrayList<Position> coordinateList = new ArrayList<>();
         coordinateList.add(new Position(0,0));
         board.takeFromBoard(coordinateList);
-        assertEquals(false, board.isCellFull(0,0).get());
+        assertFalse(board.isCellFull(0, 0).get());
 
 
-        assertEquals(true, board.isCellFull(3,2).get());
+        assertTrue(board.isCellFull(3,2).get());
         coordinateList.clear();
         coordinateList.add(new Position(3,2));
         board.takeFromBoard(coordinateList);
-        assertEquals(false, board.isCellFull(3,2).get());
+        assertFalse(board.isCellFull(3, 2).get());
     }
 
     @Test
@@ -36,12 +35,12 @@ class BoardGameModelTest {
             for (int j = 0; j < 4; j++) {
                 coordinateList.add(new Position(i,j));
             }
-            assertEquals (false,board.isGameover());
+            assertFalse(board.isGameover());
             board.takeFromBoard(coordinateList);
             coordinateList.clear();
         }
 
-        assertEquals(true, board.isGameover());
+        assertTrue(board.isGameover());
     }
 
     @Test
@@ -58,7 +57,7 @@ class BoardGameModelTest {
 
         coordinateList.clear();
         String stringExpected="+++-\n+++-\n+++-\n+++-\n";
-        coordinateList.clear();
+
         coordinateList.add(new Position(0,3));
         coordinateList.add(new Position(1,3));
         coordinateList.add(new Position(2,3));
@@ -76,54 +75,51 @@ class BoardGameModelTest {
 
     @Test
     void areAdjacent() {
-        var board = new BoardGameModel();
         var coordinateList = new ArrayList<Position>();
 
-        assertEquals(false,BoardGameModel.areAdjacent(coordinateList));
+        assertFalse(BoardGameModel.areAdjacent(coordinateList));
 
         coordinateList.add(new Position(2,3));
-        assertEquals(true,BoardGameModel.areAdjacent(coordinateList));
+        assertTrue(BoardGameModel.areAdjacent(coordinateList));
 
         coordinateList.add(new Position(3,3));
-        assertEquals(true,BoardGameModel.areAdjacent(coordinateList));
+        assertTrue(BoardGameModel.areAdjacent(coordinateList));
 
         coordinateList.add(new Position(0,3));
-        assertEquals(false,BoardGameModel.areAdjacent(coordinateList));
+        assertFalse(BoardGameModel.areAdjacent(coordinateList));
 
     }
 
     @Test
     void areSameRow() {
-        var board = new BoardGameModel();
         var coordinateList = new ArrayList<Position>();
 
-        assertEquals(false,BoardGameModel.areSameRow(coordinateList));
+        assertFalse(BoardGameModel.areSameRow(coordinateList));
 
         coordinateList.add(new Position(2,3));
-        assertEquals(true,BoardGameModel.areSameRow(coordinateList));
+        assertTrue(BoardGameModel.areSameRow(coordinateList));
 
         coordinateList.add(new Position(2,2));
-        assertEquals(true,BoardGameModel.areSameRow(coordinateList));
+        assertTrue(BoardGameModel.areSameRow(coordinateList));
 
         coordinateList.add(new Position(0,0));
-        assertEquals(false,BoardGameModel.areSameRow(coordinateList));
+        assertFalse(BoardGameModel.areSameRow(coordinateList));
     }
 
     @Test
     void areSameCol() {
-        var board = new BoardGameModel();
         var coordinateList = new ArrayList<Position>();
 
-        assertEquals(false,BoardGameModel.areSameCol(coordinateList));
+        assertFalse(BoardGameModel.areSameCol(coordinateList));
 
         coordinateList.add(new Position(2,3));
-        assertEquals(true,BoardGameModel.areSameCol(coordinateList));
+        assertTrue(BoardGameModel.areSameCol(coordinateList));
 
         coordinateList.add(new Position(0,3));
-        assertEquals(true,BoardGameModel.areSameCol(coordinateList));
+        assertTrue(BoardGameModel.areSameCol(coordinateList));
 
         coordinateList.add(new Position(0,0));
-        assertEquals(false,BoardGameModel.areSameCol(coordinateList));
+        assertFalse(BoardGameModel.areSameCol(coordinateList));
     }
 
 }
