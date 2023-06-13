@@ -125,6 +125,7 @@ public class BoardGameController {
 
         if(model.canSelect(selectedGridPositions)){
             model.takeFromBoard(selectedGridPositions);
+            Logger.info(model.toString());
             Logger.debug("Selection taken from board");
         }else{
             Logger.debug("Invalid selection");
